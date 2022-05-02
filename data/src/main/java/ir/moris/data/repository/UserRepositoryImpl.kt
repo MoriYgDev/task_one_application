@@ -1,5 +1,6 @@
 package ir.moris.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ir.moris.data.dao.UserInfoDao
 import ir.moris.data.mapper.UserTypeConverter
@@ -14,11 +15,9 @@ class UserRepositoryImpl(
         dao.insertUserInfo(UserTypeConverter.toUserInfo(userInfoModel))
     }
 
-    override fun getAllUsers(): MutableLiveData<MutableList<UserInfoModel>> {
-        return MutableLiveData(
-            dao.getAllUsers().value?.map {
-                UserTypeConverter.fromUserInfo(it)
-            }?.toMutableList()
-        )
+    override suspend fun getAllUsers(): MutableList<UserInfoModel> {
+        return dao.getAllUsers().map {
+            it.toDomain()
+        }.toMutableList()
     }
 }

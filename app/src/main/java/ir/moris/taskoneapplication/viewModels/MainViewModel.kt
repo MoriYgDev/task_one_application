@@ -1,6 +1,7 @@
 package ir.moris.taskoneapplication.viewModels
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,22 +16,23 @@ class MainViewModel @Inject constructor(
     private val userUseCases: UserUseCases
 ) : ViewModel() {
 
-    var databaseContent = MutableLiveData<MutableList<UserInfoModel>>()
+    private var _dbContent = MutableLiveData<MutableList<UserInfoModel>>()
+    val dbContent : LiveData<MutableList<UserInfoModel>> = _dbContent
 
-    init {
-        getAllUsers()
-    }
-
-    fun getAllUsers(){
-            databaseContent = userUseCases.getAllUsersUseCase()
-    }
-
-    fun signIn(userInfoModel: UserInfoModel){
+    fun signIn(userInfoModel: UserInfoModel) {
         viewModelScope.launch {
             userUseCases.insertUserUseCase(
                 userInfoModel
             )
-            Log.d("ViewModel" , "ViewModel added $userInfoModel")
+            Log.d("ViewModel", "ViewModel added $userInfoModel")
+        }
+        getAllUsers()
+
+    }
+
+    fun getAllUsers(){
+        viewModelScope.launch {
+            _dbContent.value = userUseCases.getAllUsersUseCase()
         }
     }
 

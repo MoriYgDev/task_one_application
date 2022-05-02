@@ -9,7 +9,7 @@ class GetAllUsersUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
 
-    operator fun invoke() : MutableLiveData<MutableList<UserInfoModel>>{
+    suspend operator fun invoke() : MutableList<UserInfoModel> {
         return userRepository.getAllUsers()
     }
 

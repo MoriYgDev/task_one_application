@@ -36,17 +36,18 @@ class MainActivity : AppCompatActivity() {
         btnSignIn.setOnClickListener {
 
             viewModel.signIn(
-                UserInfoModel(null ,
-            etPhoneNumber.text.toString().toLong(),
-                etPassword.text.toString())
+                UserInfoModel(
+                    0, etPhoneNumber.text.toString().toLong(),
+                    etPassword.text.toString()
+                )
             )
         }
 
-        viewModel.databaseContent.observe(this , Observer {
+        viewModel.dbContent.observe(this, Observer {
             it.forEach {
                 println("user : ${it.id} , phone number : ${it.phoneNumber} , password : ${it.password} ")
             }
-        } )
+        })
 
 
     }

@@ -1,9 +1,8 @@
 package ir.moris.data.dao
 
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import ir.moris.data.entity.UserInfo
-import ir.moris.domain.models.UserInfoModel
 
 @Dao
 interface UserInfoDao {
@@ -12,6 +11,6 @@ interface UserInfoDao {
     suspend fun insertUserInfo(userInfo : UserInfo)
 
     @Query("Select * from userinfo")
-    fun getAllUsers(): MutableLiveData<MutableList<UserInfo>>
+    suspend fun getAllUsers(): MutableList<UserInfo>
 
 }

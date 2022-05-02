@@ -5,5 +5,5 @@ import ir.moris.domain.models.UserInfoModel
 
 interface UserRepository {
     suspend fun insertUser(userInfoModel: UserInfoModel)
-    fun getAllUsers(): MutableLiveData<MutableList<UserInfoModel>>
+    suspend fun getAllUsers(): MutableList<UserInfoModel>
 }

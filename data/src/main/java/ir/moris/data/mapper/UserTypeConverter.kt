@@ -6,7 +6,7 @@ import ir.moris.domain.models.UserInfoModel
 object UserTypeConverter {
     fun toUserInfo( userInfoModel: UserInfoModel) : UserInfo{
         return UserInfo(
-            userInfoModel.id?:0,
+            userInfoModel.id,
             userInfoModel.phoneNumber,
             userInfoModel.password
         )
@@ -14,7 +14,7 @@ object UserTypeConverter {
 
     fun fromUserInfo(userInfo: UserInfo):UserInfoModel{
         return UserInfoModel(
-            userInfo.id?:0,
+            userInfo.id,
             userInfo.phoneNumber,
             userInfo.password
         )
